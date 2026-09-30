@@ -1,0 +1,34 @@
+name: laza_shop_firebase_app
+description: "A production-ready Flutter e-commerce application (Laza Shop)."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.3
+  flutter_bloc: ^8.1.6
+  dio: ^5.7.0
+  shared_preferences: ^2.3.2
+  google_fonts: ^6.2.1
+  equatable: ^2.0.5
+  cupertino_icons: ^1.0.8
+  firebase_core: ^4.15.0
+  firebase_auth: ^6.7.0
+  cloud_firestore: ^6.10.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/images/
