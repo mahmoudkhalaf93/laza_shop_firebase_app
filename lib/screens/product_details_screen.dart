@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../l10n/app_localizations.dart';
 
 import '../blocs/cart/cart_bloc.dart';
@@ -105,11 +106,13 @@ class ProductDetailsScreen extends StatelessWidget {
                         ),
                         child: Hero(
                           tag: 'product_image_${product.id}',
-                          child: Image.network(
-                            product.image,
+                          child: CachedNetworkImage(
+                            imageUrl: product.image,
                             fit: BoxFit.contain,
-                            errorBuilder: (context, error, stackTrace) =>
-                                const Icon(
+                            placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context, url, error) => const Icon(
                               Icons.broken_image,
                               size: 80,
                               color: Colors.grey,
