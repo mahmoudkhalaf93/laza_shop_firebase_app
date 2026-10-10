@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../l10n/app_localizations.dart';
 
 /// Interactive PageView banner displaying promotional and hot-offer banners.
@@ -100,10 +101,14 @@ class _BannerPageViewState extends State<BannerPageView> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.network(
-                        banner['image']!,
+                      CachedNetworkImage(
+                        imageUrl: banner['image']!,
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
+                        placeholder: (context, url) => Container(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          child: const Center(child: CircularProgressIndicator()),
+                        ),
+                        errorWidget: (context, url, error) => Container(
                           color: Theme.of(context).colorScheme.primaryContainer,
                           child: const Icon(Icons.image, size: 50),
                         ),
