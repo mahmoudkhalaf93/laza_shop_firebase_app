@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import '../blocs/cart/cart_bloc.dart';
 import '../blocs/cart/cart_event.dart';
@@ -45,17 +44,10 @@ class CartItemTile extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: CachedNetworkImage(
-              imageUrl: product.image,
+            child: Image.network(
+              product.image,
               fit: BoxFit.contain,
-              placeholder: (context, url) => const Center(
-                child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
-              ),
-              errorWidget: (context, url, error) =>
+              errorBuilder: (context, error, stackTrace) =>
                   const Icon(Icons.broken_image, size: 30),
             ),
           ),
