@@ -13,14 +13,14 @@ class UserDataFormScreen extends StatefulWidget {
 
 class _UserDataFormScreenState extends State<UserDataFormScreen> {
   final _formKey = GlobalKey<FormState>();
-  
+
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
   final _hobbyController = TextEditingController();
-  
+
   final FirestoreService _firestoreService = FirestoreService();
   final User? currentUser = FirebaseAuth.instance.currentUser;
-  
+
   bool _isSaving = false;
 
   @override
@@ -49,7 +49,7 @@ class _UserDataFormScreenState extends State<UserDataFormScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Record added successfully!')),
         );
-        
+
         // Clear the form after saving to allow adding more
         _nameController.clear();
         _ageController.clear();
@@ -88,7 +88,7 @@ class _UserDataFormScreenState extends State<UserDataFormScreen> {
                   style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 20),
-                
+
                 // Name Field
                 TextFormField(
                   controller: _nameController,
@@ -105,7 +105,7 @@ class _UserDataFormScreenState extends State<UserDataFormScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Age Field
                 TextFormField(
                   controller: _ageController,
@@ -126,7 +126,7 @@ class _UserDataFormScreenState extends State<UserDataFormScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Hobby Field
                 TextFormField(
                   controller: _hobbyController,
@@ -143,7 +143,7 @@ class _UserDataFormScreenState extends State<UserDataFormScreen> {
                   },
                 ),
                 const SizedBox(height: 32),
-                
+
                 // Save Data Button
                 _isSaving
                     ? const Center(child: CircularProgressIndicator())
@@ -152,10 +152,11 @@ class _UserDataFormScreenState extends State<UserDataFormScreen> {
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
-                        child: const Text('Add Record', style: TextStyle(fontSize: 16)),
+                        child: const Text('Add Record',
+                            style: TextStyle(fontSize: 16)),
                       ),
                 const SizedBox(height: 16),
-                
+
                 // Navigate to Display Page Button
                 OutlinedButton(
                   onPressed: () {
@@ -168,7 +169,8 @@ class _UserDataFormScreenState extends State<UserDataFormScreen> {
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
-                  child: const Text('View All Records', style: TextStyle(fontSize: 16)),
+                  child: const Text('View All Records',
+                      style: TextStyle(fontSize: 16)),
                 ),
               ],
             ),

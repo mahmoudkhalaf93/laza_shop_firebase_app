@@ -5,6 +5,7 @@ plugins {
     // END: FlutterFire Configuration
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -49,4 +50,15 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+secrets {
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "local.properties"
+
+    // Configure which keys should be ignored by the plugin to ensure they are not
+    // injected into the BuildConfig class or AndroidManifest unecessarily.
+    ignoreList.add("sdk.dir")
+    ignoreList.add("flutter.sdk")
 }

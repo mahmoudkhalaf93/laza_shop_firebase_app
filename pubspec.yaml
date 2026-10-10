@@ -21,6 +21,14 @@ dependencies:
   firebase_core: ^4.15.0
   firebase_auth: ^6.7.0
   cloud_firestore: ^6.10.0
+  device_info_plus: ^13.3.0
+  image_picker: ^1.2.4
+  google_maps_flutter: ^2.18.2
+  local_auth: 2.2.0
+  record: ^7.1.1
+  audioplayers: ^6.8.1
+  path_provider: ^2.1.6
+  local_auth_android: 1.0.56
 
 dev_dependencies:
   flutter_test:

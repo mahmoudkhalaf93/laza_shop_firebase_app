@@ -27,7 +27,7 @@ class _UserDataDisplayScreenState extends State<UserDataDisplayScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          
+
           // Handle error state
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -42,12 +42,12 @@ class _UserDataDisplayScreenState extends State<UserDataDisplayScreen> {
 
           // Build a list of user profiles
           final userDocs = snapshot.data!.docs;
-          
+
           return ListView.builder(
             itemCount: userDocs.length,
             itemBuilder: (context, index) {
               final userData = userDocs[index].data() as Map<String, dynamic>;
-              
+
               // Safely extract fields with fallbacks
               final name = userData['name'] ?? 'Unknown Name';
               final age = userData['age']?.toString() ?? 'N/A';

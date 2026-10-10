@@ -1,60 +1,52 @@
-# Laza Shop - Firebase Integration (Mini Project)
+# Laza Shop - Flutter Device Features Mini Project
 
-A production-ready Flutter e-commerce application demonstrating the integration of Firebase Authentication and Cloud Firestore. This project is a continuation of the Laza Shop UI, now upgraded with a real backend.
+This repository extends the existing Laza Shop Firebase application to integrate multiple native device features, serving as the submission for the **Flutter Device Features — Mini Project**.
 
-## 🚀 Features
+## Overview
+This project adds native hardware capabilities cleanly without disturbing the existing core E-commerce and Firebase Authentication functionality. The new features are gated behind a secure Profile dashboard accessed via biometric authentication.
 
-### Phase 1: Firebase Authentication
-* **Sign Up Screen:** Allows users to create a new account using Email and Password. Form includes robust validation.
-* **Login Screen:** Existing users can sign in using their Email and Password.
-* Smooth animated transitions between authentication screens and the Home screen.
+## Implemented Features
+* **Phase 1 (Device Info):** Fetches runtime hardware model and OS version using `device_info_plus`.
+* **Phase 2 (Media Access):** Provides a multi-image picker gallery using `image_picker`.
+* **Phase 3 (Google Maps):** Renders a Google Map centered on Cairo, Egypt with a custom marker using `google_maps_flutter`.
+* **Phase 4 (Biometric Auth):** Uses `local_auth` to protect the Profile Screen. Users must authenticate with Fingerprint/PIN to access device features. (Profile defaults to `mahmoud khalaf` / `mody@gmail.com` if Firebase Auth data is missing).
+* **Phase 5 (Audio Recorder):** Allows recording and playback of local audio files using `record` and `audioplayers`.
 
-### Phase 2: Cloud Firestore (Save & Display Data)
-* **Complete Profile Form:** A dedicated screen where authenticated users can add a new profile record (Name, Age, and Favourite Hobby).
-* **Real-time Display:** A separate screen that fetches and displays all saved profile records from Firestore in real-time using `StreamBuilder`.
+## Packages Used
+* `device_info_plus`: ^13.3.0
+* `image_picker`: ^1.2.4
+* `google_maps_flutter`: ^2.18.2
+* `local_auth`: ^3.0.2
+* `record`: ^7.1.1
+* `audioplayers`: ^6.8.1
+* `path_provider`: ^2.1.6
 
-## 📸 Screenshots
+## Permissions Required & Configured
+The following permissions are configured in `android/app/src/main/AndroidManifest.xml`:
+* `android.permission.INTERNET` - Required for Google Maps and Firebase.
+* `android.permission.USE_BIOMETRIC` - Required for `local_auth` fingerprint scanning.
+* `android.permission.RECORD_AUDIO` - Required by the `record` package to access the microphone.
+* *(Note: `image_picker` automatically handles Android storage intents without requiring broad manifest storage permissions in modern Android versions).*
 
-|   |   |   |
-| :---: | :---: | :---: |
-| <img src="screenshots/1.png" width="250"/> | <img src="screenshots/2.png" width="250"/> | <img src="screenshots/3.png" width="250"/> |
-| <img src="screenshots/3a.png" width="250"/> | <img src="screenshots/4.png" width="250"/> | <img src="screenshots/5.png" width="250"/> |
-| <img src="screenshots/6.png" width="250"/> | <img src="screenshots/7.png" width="250"/> | <img src="screenshots/8.png" width="250"/> |
-| <img src="screenshots/9.png" width="250"/> | <img src="screenshots/10.png" width="250"/> | <img src="screenshots/11.png" width="250"/> |
-| <img src="screenshots/12.png" width="250"/> | | |
+## Google Maps API Key Configuration (Local Secure Setup)
+To protect API keys, this project uses the **Secrets Gradle Plugin for Android**. The API key is **NOT** tracked in source control.
 
-## 🛠️ Technologies & Packages
-* **Flutter SDK & Dart**
-* **Firebase Core:** `firebase_core`
-* **Firebase Authentication:** `firebase_auth`
-* **Cloud Firestore:** `cloud_firestore`
-* **State Management:** `flutter_bloc`
-* **Network/API:** `dio`
-
-## ⚙️ Getting Started
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/mahmoudkhalaf93/laza_shop_firebase_app.git
+To run the Google Maps feature on your local machine, follow these steps:
+1. Ensure your Google Cloud Project has the **Maps SDK for Android** enabled and billing is active.
+2. In the root of the Android module (`android/local.properties`), add your API key like so:
+   ```properties
+   MAPS_API_KEY=AIzaSyYourActualApiKeyHere...
    ```
-2. Navigate to the project directory:
-   ```bash
-   cd laza_shop_firebase_app
-   ```
-3. Get Flutter dependencies:
-   ```bash
-   flutter pub get
-   ```
-4. Configure Firebase:
-   Run the FlutterFire CLI command to link this project with your Firebase account (Ensure Firebase Auth and Firestore are enabled in your console):
-   ```bash
-   flutterfire configure
-   ```
-5. Run the app:
-   ```bash
-   flutter run
-   ```
+3. The app is configured to read this via the Secrets plugin and inject it into the `AndroidManifest.xml` safely at build time. 
 
-## 📝 Notes
-* Firestore rules should be configured to allow reading and writing for the features to work properly.
-* Code is organized cleanly with separate files for screens and services. 
+## Testing Instructions
+1. Run `flutter pub get`.
+2. Connect a physical Android device or emulator. Ensure the emulator has a PIN or Fingerprint configured in the Android Security settings.
+3. Run the app: `flutter run`.
+4. Log into the shopping app (or create a new account).
+5. On the top right of the Home Screen, tap the **Profile Icon**.
+6. Complete the Biometric/PIN prompt.
+7. You are now on the Profile Screen. Tap through the list items to test Device Info, Gallery, Maps, and Audio capabilities.
+
+## Screenshots Deliverables
+Screenshots demonstrating the functionality (Device Info, Gallery, Maps, Biometric Prompt, and Audio Screen) should be captured from a running device and stored in the `screenshots/` directory of the final repository.

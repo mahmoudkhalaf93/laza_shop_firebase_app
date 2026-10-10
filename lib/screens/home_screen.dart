@@ -13,7 +13,8 @@ import '../widgets/banner_page_view.dart';
 import '../widgets/product_card.dart';
 import 'cart_screen.dart';
 import 'product_details_screen.dart';
-import 'user_data_form_screen.dart'; // Added for Firebase Task Navigation
+import '../services/biometric_auth_service.dart';
+import 'profile_screen.dart';
 
 /// Main Home Screen containing promotional PageView banner and responsive GridView of products.
 class HomeScreen extends StatefulWidget {
@@ -45,14 +46,23 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(l10n.appTitle),
         actions: [
-          // Profile button (Navigates to Firestore Task screen)
+          // Profile button (Requires Biometric Auth)
           IconButton(
             icon: const Icon(Icons.person),
-            tooltip: 'Profile (Firestore Task)',
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const UserDataFormScreen()),
-              );
+            tooltip: 'Profile',
+            onPressed: () async {
+              final authenticated = await BiometricAuthService.authenticate();
+              if (authenticated && context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const ProfileScreen()),
+                );
+              } else if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content:
+                          Text('Authentication required to access profile.')),
+                );
+              }
             },
           ),
           // Language switch
