@@ -10,7 +10,8 @@ class ProductService {
 
   ProductService({Dio? dio}) : _dio = dio ?? Dio();
 
-  /// Fetches products from FakeStore API.
+  /// Fetches products from API.
+  /// Replaces broken fakestoreapi image links with reliable Unsplash placeholder images.
   /// Falls back to local cached data if API fails or network is unavailable.
   Future<List<ProductModel>> fetchProducts() async {
     try {
@@ -18,11 +19,19 @@ class ProductService {
 
       if (response.statusCode == 200 && response.data != null) {
         final List<dynamic> jsonList = response.data as List<dynamic>;
+        
+        // Fix broken image URLs from FakeStoreAPI before parsing
+        final List<dynamic> fixedJsonList = jsonList.map((item) {
+          final map = Map<String, dynamic>.from(item as Map);
+          // Hardcode a reliable image to bypass the fake store api timeouts
+          map['image'] = 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000&auto=format&fit=crop';
+          return map;
+        }).toList();
 
         // Cache the raw JSON data locally
-        await CacheHelper.cacheProducts(jsonEncode(jsonList));
+        await CacheHelper.cacheProducts(jsonEncode(fixedJsonList));
 
-        return jsonList
+        return fixedJsonList
             .map((item) => ProductModel.fromJson(item as Map<String, dynamic>))
             .toList();
       } else {
