@@ -6,32 +6,36 @@ import 'cache_helper.dart';
 /// Service responsible for fetching product data from API with offline cache fallback.
 class ProductService {
   final Dio _dio;
-  static const String _baseUrl = 'https://fakestoreapi.com/products';
+  static const String _baseUrl = 'https://dummyjson.com/products';
 
   ProductService({Dio? dio}) : _dio = dio ?? Dio();
 
-  /// Fetches products from API.
-  /// Replaces broken fakestoreapi image links with reliable Unsplash placeholder images.
+  /// Fetches products from DummyJSON API.
   /// Falls back to local cached data if API fails or network is unavailable.
   Future<List<ProductModel>> fetchProducts() async {
     try {
       final response = await _dio.get(_baseUrl);
 
       if (response.statusCode == 200 && response.data != null) {
-        final List<dynamic> jsonList = response.data as List<dynamic>;
+        final List<dynamic> rawList = response.data['products'] as List<dynamic>;
         
-        // Fix broken image URLs from FakeStoreAPI before parsing
-        final List<dynamic> fixedJsonList = jsonList.map((item) {
+        // Map DummyJSON structure to our existing ProductModel structure
+        final List<dynamic> mappedList = rawList.map((item) {
           final map = Map<String, dynamic>.from(item as Map);
-          // Hardcode a reliable image to bypass the fake store api timeouts
-          map['image'] = 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000&auto=format&fit=crop';
-          return map;
+          return {
+            'id': map['id'],
+            'title': map['title'],
+            'price': (map['price'] as num).toDouble(),
+            'description': map['description'],
+            'category': map['category'],
+            'image': map['thumbnail'] ?? '', // Map their thumbnail to our image
+          };
         }).toList();
 
         // Cache the raw JSON data locally
-        await CacheHelper.cacheProducts(jsonEncode(fixedJsonList));
+        await CacheHelper.cacheProducts(jsonEncode(mappedList));
 
-        return fixedJsonList
+        return mappedList
             .map((item) => ProductModel.fromJson(item as Map<String, dynamic>))
             .toList();
       } else {
