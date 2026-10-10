@@ -26,7 +26,8 @@ The following permissions are configured in `android/app/src/main/AndroidManifes
 * `android.permission.INTERNET` - Required for Google Maps and Firebase.
 * `android.permission.USE_BIOMETRIC` - Required for `local_auth` fingerprint scanning.
 * `android.permission.RECORD_AUDIO` - Required by the `record` package to access the microphone.
-* *(Note: `image_picker` automatically handles Android storage intents without requiring broad manifest storage permissions in modern Android versions).*
+* `android.permission.ACCESS_FINE_LOCATION` & `ACCESS_COARSE_LOCATION` - Recommended for proper maps functionality.
+* `android:usesCleartextTraffic="true"` - Enabled to allow product network images to load natively without SSL issues.
 
 ## Google Maps API Key Configuration (Local Secure Setup)
 To protect API keys, this project uses the **Secrets Gradle Plugin for Android**. The API key is **NOT** tracked in source control.
@@ -48,5 +49,36 @@ To run the Google Maps feature on your local machine, follow these steps:
 6. Complete the Biometric/PIN prompt.
 7. You are now on the Profile Screen. Tap through the list items to test Device Info, Gallery, Maps, and Audio capabilities.
 
-## Screenshots Deliverables
-Screenshots demonstrating the functionality (Device Info, Gallery, Maps, Biometric Prompt, and Audio Screen) should be captured from a running device and stored in the `screenshots/` directory of the final repository.
+---
+
+## App Screenshots
+
+Here is a showcase of the app and its newly implemented device features:
+
+<p align="center">
+  <img src="screenshots/1.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/2.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/3.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/3a.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/4.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/5.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/6.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/7.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/8.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/9.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/10.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/11.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/12.png" width="200" style="margin: 5px"/>
+  <img src="screenshots/13.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/14.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/15.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/16.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/17.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/18.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/19.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/20.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/21.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/22.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/23.jpg" width="200" style="margin: 5px"/>
+  <img src="screenshots/24.jpg" width="200" style="margin: 5px"/>
+</p>
